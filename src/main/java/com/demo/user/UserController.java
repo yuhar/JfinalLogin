@@ -48,7 +48,7 @@ public class UserController extends Controller{
 		service.deleteById(getParaToInt());
 		redirect("/user");
 	}
-	
+	@Before(UserValidator.class)
 	public void login1() {
 		String name = getPara("name");//获取表单数据，这里的参数就是页面表单中的name属性值
 		String password = getPara("password");
@@ -69,10 +69,13 @@ public class UserController extends Controller{
 
 	}
 	
-//	@Before(UserValidator.class)
+	@Before(UserValidator.class)
 	public void signup() {
-		getBean(Account.class).save();
-		Account account=getBean(Account.class);
+		String name = getPara("name");
+		String password = getPara("password");
+		Account account=new Account();
+		account.setName(name);
+		account.setPassword(password);
 		account.save();
 		redirect("/user");
 	}
