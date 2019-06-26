@@ -12,7 +12,7 @@ import com.demo.common.model.Blog;
  * 所有 sql 与业务逻辑写在 Service 中，不要放在 Model 中，更不
  * 要放在 Controller 中，养成好习惯，有利于大型项目的开发与维护
  */
-//@Before(BlogInterceptor.class)
+@Before(BlogInterceptor.class)
 public class BlogController extends Controller {
 	
 	@Inject

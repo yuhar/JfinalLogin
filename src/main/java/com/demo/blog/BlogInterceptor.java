@@ -1,20 +1,25 @@
 package com.demo.blog;
 
+import javax.servlet.http.HttpSession;
+
 import com.jfinal.aop.Interceptor;
 import com.jfinal.aop.Invocation;
 
-/**
- * 本 demo 仅表达最为粗浅的 jfinal 用法，更为有价值的实用的企业级用法
- * 详见 JFinal 俱乐部: http://jfinal.com/club
- * 
- * BlogInterceptor
- * 此拦截器仅做为示例展示，在本 demo 中并不需要
- */
+
 public class BlogInterceptor implements Interceptor {
 	
 	public void intercept(Invocation inv) {
-		System.out.println("Before invoking " + inv.getActionKey());
-		inv.invoke();
-		System.out.println("After invoking " + inv.getActionKey());
+		HttpSession session = inv.getController().getSession();
+		if(session == null) {
+			inv.getController().redirect("/user");
+		}
+		else {
+			Boolean validate = (Boolean) session.getAttribute("validated");
+			if(validate == null || !validate) {
+				inv.getController().redirect("/user");
+			}
+		}
+		
+		
 	}
 }

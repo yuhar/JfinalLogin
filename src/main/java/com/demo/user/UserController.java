@@ -55,7 +55,7 @@ public class UserController extends Controller{
 		Account item =service.findByName(name);//根据用户名查询数据库中的用户
 		if(item != null) {
 			if(password.equals(item.getStr("password"))) {//判断数据库中的密码与用户输入的密码是否一致
-
+				getSession().setAttribute("validated", true);
 				setAttr("blogPage", blogService.paginate(getParaToInt(0, 1), 10));//设置session，保存登录用户的昵称
 				render("/blog/blog.html");
 			}
